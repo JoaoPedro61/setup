@@ -342,27 +342,6 @@ function install_android {
   fi
 }
 
-function install_gradle {
-  if [ -z "$GRADLE_PATH" ]; then
-    ask "Install Gladle?" "y"
-    if [ $? -eq 1 ]; then 
-      echo "Installing..."
-      echo "Running: sudo apt update"
-      sudo apt update
-      echo "Running: sudo apt install gradle"
-      sudo apt install gradle
-    elif [ $? -eq 0 ]; then
-      echo "To continue with the automated procedure, you need to install this dependency"
-      exit 0;
-    else
-      echo "Option not available"
-      exit 0;
-    fi
-  else
-    echo -e "Gladle Installed"
-  fi
-}
-
 function install_socat {
   if [ -z "$SOCAT_PATH" ]; then
     ask "Install Socat?" "y"
@@ -407,7 +386,6 @@ install_yarn
 install_unzip
 install_java
 install_android
-install_gradle
 install_socat
 configure_wsl_env
 echo "-----------------------------------------------------"
