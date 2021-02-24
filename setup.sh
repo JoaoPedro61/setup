@@ -42,9 +42,9 @@ function ask {
       return 0
     fi
   else
-    if [ "$ASK_RESPONSE" == "Y" ] || [ "$ASK_RESPONSE" == "y" ]; then 
+    if [ "$ASK_RESPONSE" == "Y" -o "$ASK_RESPONSE" == "y" ]; then 
       return 1
-    elif [ "$ASK_RESPONSE" == "n" ] || [ "$ASK_RESPONSE" == "N" ]; then
+    elif [ "$ASK_RESPONSE" == "n" -o "$ASK_RESPONSE" == "N" ]; then
       return 0
     else
       return 3
@@ -145,10 +145,10 @@ function configure_nvim {
       echo "Running: mkdir $HOME/.config/nvim"
       mkdir $HOME/.config/nvim
     fi
-    if [ ! -f "$HOME/.config/nvim/init.vim" ]; then
-      echo "Creating nvim config file in \"$HOME/.config/nvim/init.vim\""
-      echo "Running: touch $HOME/.config/nvim/init.vim"
-      touch $HOME/.config/nvim/init.vim
+    if [ -f "$HOME/.config/nvim/init.vim" ]; then
+      echo "Creating nvim config file backup in \"$HOME/.config/nvim/init.vim\""
+      echo "Running: mv $HOME/.config/nvim/init.vim $HOME/.config/nvim/init.vim.backup-$(date +%Y-%m-%d)"
+      mv $HOME/.config/nvim/init.vim $HOME/.config/nvim/init.vim.backup-$(date +%Y-%m-%d)
     fi
     echo "Finding NVIM directory settings..."
     echo "Entering in NVIM directory settings"
