@@ -184,7 +184,6 @@ function install_nvim {
       echo "To continue with the automated procedure, you need to install this dependency"
     else
       echo "Option not available"
-      exit 0;
     fi
   else
     echo -e "NVim Installed"
@@ -206,7 +205,6 @@ function install_wget {
       echo "To continue with the automated procedure, you need to install this dependency"
     else
       echo "Option not available"
-      exit 0;
     fi
   else
     echo -e "Wget Installed"
@@ -226,7 +224,6 @@ function install_curl {
       echo "To continue with the automated procedure, you need to install this dependency"
     else
       echo "Option not available"
-      exit 0;
     fi
   else
     echo -e "cUrl Installed"
@@ -252,7 +249,6 @@ function install_nvm {
         echo "To continue with the automated procedure, you need to install this dependency"
       else
         echo "Option not available"
-        exit 0;
       fi
     else
       echo -e "Some Node Version Is Installed"
@@ -274,7 +270,6 @@ function install_nvm {
       echo "To continue with the automated procedure, you need to install this dependency"
     else
       echo "Option not available"
-      exit 0;
     fi
   fi
 }
@@ -296,7 +291,6 @@ function install_yarn {
       echo "To continue with the automated procedure, you need to install this dependency"
     else
       echo "Option not available"
-      exit 0;
     fi
   else
     echo -e "Yarn Installed"
@@ -314,7 +308,6 @@ function install_unzip {
       echo "To continue with the automated procedure, you need to install this dependency"
     else
       echo "Option not available"
-      exit 0;
     fi
   else
     echo -e "Unzip Installed"
@@ -338,7 +331,6 @@ function install_java {
       echo "To continue with the automated procedure, you need to install this dependency"
     else
       echo "Option not available"
-      exit 0;
     fi
   else
     echo -e "Java Installed"
@@ -350,7 +342,6 @@ function install_java {
         echo "To continue with the automated procedure, you need to configure this dependency"
       else
         echo "Option not available"
-        exit 0;
       fi
     fi
   fi
@@ -372,7 +363,6 @@ function install_android {
           echo "To continue with the automated procedure, you need to configure this dependency"
         else
           echo "Option not available"
-          exit 0;
         fi
       fi
 
@@ -409,7 +399,6 @@ function install_socat {
       echo "To continue with the automated procedure, you need to install this dependency"
     else
       echo "Option not available"
-      exit 0;
     fi
   else
     echo -e "Socat Installed"
