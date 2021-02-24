@@ -7,8 +7,8 @@ NODE_NVM_PATH=$(which node)
 YARN_PATH=$(which yarn)
 CURL_PATH=$(which curl)
 WGET_PATH=$(which wget)
-GRADLE_PATH=$(which gradle)
 SOCAT_PATH=$(which socat)
+NVIM_PATH=$(which nvim)
 
 # DEFINE VARS
 echo "Variables: "
@@ -22,7 +22,6 @@ echo -e "$NODE_NVM_PATH"
 echo -e "$YARN_PATH"
 echo -e "$CURL_PATH"
 echo -e "$WGET_PATH"
-echo -e "$GRADLE_PATH"
 echo -e "$SOCAT_PATH"
 echo "-----------------------------------------------------"
 echo ""
@@ -57,7 +56,7 @@ function ask {
 function install_npm_packages {
   source $HOME/.bashrc
   echo "Installing npm packages..."
-  npm i -g typescript @angular/cli @angular/language-service expo-cli react-native
+  npm i -g typescript @angular/cli @angular/language-service expo-cli react-native create-react-app
 }
 
 function execute_installation_of_platform_tools {
@@ -126,8 +125,72 @@ function configure_java_path {
     source $HOME/.bashrc
   else
     echo "Can 't Find Java Directory"
-    exit 0;
   fi 
+}
+
+function configure_nvim {
+  ask "Use your remote settings to this installation of NVim?" "y"
+  if [ $? -eq 1 ]; then
+    echo "Fetching your remote settings..."
+    if [ ! -d "$HOME/.vim" ]; then
+      echo "Running: mkdir $HOME/.vim"
+      mkdir $HOME/.vim
+    fi
+    if [ ! -d "$HOME/.vim/bundle" ]; then
+      echo "Running: mkdir $HOME/.vim/bundle"
+      mkdir $HOME/.vim/bundle
+    fi
+    if [ ! -d "$HOME/.config/nvim" ]; then
+      echo "Creating nvim config directory in \"$HOME/.config/nvim\""
+      echo "Running: mkdir $HOME/.config/nvim"
+      mkdir $HOME/.config/nvim
+    fi
+    if [ ! -f "$HOME/.config/nvim/init.vim" ]; then
+      echo "Creating nvim config file in \"$HOME/.config/nvim/init.vim\""
+      echo "Running: touch $HOME/.config/nvim/init.vim"
+      touch $HOME/.config/nvim/init.vim
+    fi
+    echo "Finding NVIM directory settings..."
+    echo "Entering in NVIM directory settings"
+    echo "Running: cd $HOME/.config/nvim/"
+    cd $HOME/.config/nvim/
+    echo "Downloading \"init.vim\"...."
+    echo "Running: wget https://raw.githubusercontent.com/JoaoPedro61/setup/main/init.vim"
+    wget https://raw.githubusercontent.com/JoaoPedro61/setup/main/init.vim
+    echo "Running: cd -"
+    cd -
+
+    echo "Installing NVIM extensions..."
+    sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+  fi
+}
+
+function install_nvim {
+  if [ -z "$NVIM_PATH" ]; then
+    ask "Install NVim?" "y"
+    if [ $? -eq 1 ]; then 
+      echo "Installing..."
+      echo "Running: sudo apt update"
+      sudo apt update
+      echo "Running: sudo apt install neovim"
+      sudo apt install neovim
+
+      configure_nvim
+    elif [ $? -eq 0 ]; then
+      echo "To continue with the automated procedure, you need to install this dependency"
+    else
+      echo "Option not available"
+      exit 0;
+    fi
+  else
+    echo -e "NVim Installed"
+
+    configure_nvim
+  fi
 }
 
 function install_wget {
@@ -141,7 +204,6 @@ function install_wget {
       sudo apt install wget
     elif [ $? -eq 0 ]; then
       echo "To continue with the automated procedure, you need to install this dependency"
-      exit 0;
     else
       echo "Option not available"
       exit 0;
@@ -162,7 +224,6 @@ function install_curl {
       sudo apt install curl
     elif [ $? -eq 0 ]; then
       echo "To continue with the automated procedure, you need to install this dependency"
-      exit 0;
     else
       echo "Option not available"
       exit 0;
@@ -189,7 +250,6 @@ function install_nvm {
         install_npm_packages
       elif [ $? -eq 0 ]; then
         echo "To continue with the automated procedure, you need to install this dependency"
-        exit 0;
       else
         echo "Option not available"
         exit 0;
@@ -212,7 +272,6 @@ function install_nvm {
       install_npm_packages
     elif [ $? -eq 0 ]; then
       echo "To continue with the automated procedure, you need to install this dependency"
-      exit 0;
     else
       echo "Option not available"
       exit 0;
@@ -235,7 +294,6 @@ function install_yarn {
       sudo apt install --no-install-recommends yarn
     elif [ $? -eq 0 ]; then
       echo "To continue with the automated procedure, you need to install this dependency"
-      exit 0;
     else
       echo "Option not available"
       exit 0;
@@ -254,7 +312,6 @@ function install_unzip {
       sudo apt-get install unzip
     elif [ $? -eq 0 ]; then
       echo "To continue with the automated procedure, you need to install this dependency"
-      exit 0;
     else
       echo "Option not available"
       exit 0;
@@ -279,7 +336,6 @@ function install_java {
       configure_java_path
     elif [ $? -eq 0 ]; then
       echo "To continue with the automated procedure, you need to install this dependency"
-      exit 0;
     else
       echo "Option not available"
       exit 0;
@@ -292,7 +348,6 @@ function install_java {
         configure_java_path
       elif [ $? -eq 0 ]; then
         echo "To continue with the automated procedure, you need to configure this dependency"
-        exit 0;
       else
         echo "Option not available"
         exit 0;
@@ -315,7 +370,6 @@ function install_android {
           SHOULD_UPDATE_SDK=1
         elif [ $? -eq 0 ]; then
           echo "To continue with the automated procedure, you need to configure this dependency"
-          exit 0;
         else
           echo "Option not available"
           exit 0;
@@ -353,7 +407,6 @@ function install_socat {
       sudo apt-get install socat
     elif [ $? -eq 0 ]; then
       echo "To continue with the automated procedure, you need to install this dependency"
-      exit 0;
     else
       echo "Option not available"
       exit 0;
@@ -381,6 +434,7 @@ echo "Checking dependencies: "
 echo "-----------------------------------------------------"
 install_wget
 install_curl
+install_nvim
 install_nvm
 install_yarn
 install_unzip
