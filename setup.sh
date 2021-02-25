@@ -9,20 +9,23 @@ CURL_PATH=$(which curl)
 WGET_PATH=$(which wget)
 SOCAT_PATH=$(which socat)
 NVIM_PATH=$(which nvim)
+TMUX_PATH=$(which tmux)
 
 # DEFINE VARS
 echo "Variables: "
 echo "-----------------------------------------------------"
-echo -e "$SDK_TOOL_LINIX_FILE_NAME"
-echo -e "$ANDROID_DIR"
-echo -e "$UNZIP_PATH"
-echo -e "$JAVA_PATH"
-echo -e "$NVM_LOCAL_DIR"
-echo -e "$NODE_NVM_PATH"
-echo -e "$YARN_PATH"
-echo -e "$CURL_PATH"
-echo -e "$WGET_PATH"
-echo -e "$SOCAT_PATH"
+echo -e "SDK_TOOL_LINIX_FILE_NAME: $SDK_TOOL_LINIX_FILE_NAME"
+echo -e "ANDROID_DIR: $ANDROID_DIR"
+echo -e "UNZIP_PATH: $UNZIP_PATH"
+echo -e "JAVA_PATH: $JAVA_PATH"
+echo -e "NVM_LOCAL_DIR: $NVM_LOCAL_DIR"
+echo -e "NODE_NVM_PATH: $NODE_NVM_PATH"
+echo -e "YARN_PATH: $YARN_PATH"
+echo -e "CURL_PATH: $CURL_PATH"
+echo -e "WGET_PATH: $WGET_PATH"
+echo -e "SOCAT_PATH: $SOCAT_PATH"
+echo -e "NVIM_PATH: $NVIM_PATH"
+echo -e "TMUX_PATH: $TMUX_PATH"
 echo "-----------------------------------------------------"
 echo ""
 
@@ -166,6 +169,48 @@ function configure_nvim {
 
     git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
+  fi
+}
+
+function configure_tmux {
+  ask "Use your remote settings to this installation of tmux?" "y"
+  if [ $? -eq 1 ]; then
+    echo "Running: cd "
+    cd
+    echo "Fetching your remote settings..."
+    if [ -f "$HOME/.tmux.conf" ]; then
+      echo "Creating nvim config file backup in \"$HOME/.tmux.conf\""
+      echo "Running: mv $HOME/.tmux.conf $HOME/.tmux.conf.backup-$(date +%Y-%m-%d)"
+      mv $HOME/.tmux.conf $HOME/.tmux.conf.backup-$(date +%Y-%m-%d)
+    fi
+    echo "Downloading \".tmux.conf\"...."
+    echo "Running: wget https://raw.githubusercontent.com/JoaoPedro61/setup/main/.tmux.conf"
+    wget https://raw.githubusercontent.com/JoaoPedro61/setup/main/.tmux.conf
+    echo "Running: cd -"
+    cd -
+  fi
+}
+
+function install_tmux {
+  if [ -z "$TMUX_PATH" ]; then
+    ask "Install Tmux?" "y"
+    if [ $? -eq 1 ]; then 
+      echo "Installing..."
+      echo "Running: sudo apt update"
+      sudo apt update
+      echo "Running: sudo apt install tmux"
+      sudo apt install tmux
+
+      configure_tmux
+    elif [ $? -eq 0 ]; then
+      echo "To continue with the automated procedure, you need to install this dependency"
+    else
+      echo "Option not available"
+    fi
+  else
+    echo -e "Tmux Installed"
+
+    configure_tmux
   fi
 }
 
@@ -423,6 +468,7 @@ echo "Checking dependencies: "
 echo "-----------------------------------------------------"
 install_wget
 install_curl
+install_tmux
 install_nvim
 install_nvm
 install_yarn
