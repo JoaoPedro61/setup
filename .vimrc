@@ -1,6 +1,5 @@
-set nocompatible
-filetype off
-
+set nocompatible              " be iMproved, required
+filetype off                  " required
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """Vim Installer Plugs with Vundle""""""""""""""""""""""""""
@@ -10,8 +9,6 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 
-Plugin 'edkolev/tmuxline.vim'
-
 Plugin 'vim-airline/vim-airline'
 
 Plugin 'vim-airline/vim-airline-themes'
@@ -20,10 +17,68 @@ Plugin 'rust-lang/rust.vim'
 
 Plugin 'nathanaelkane/vim-indent-guides'
 
+Plugin 'leafgarland/typescript-vim'
+
+Plugin 'neoclide/coc.nvim'
+let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-tsserver', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier', 'coc-rls']
+
+Plugin 'shougo/vimproc.vim'
+
+Plugin 'quramy/tsuquyomi'
+
+Plugin 'scrooloose/nerdtree'
+
+Plugin 'jistr/vim-nerdtree-tabs'
+
+Plugin 'kien/rainbow_parentheses.vim'
+
+Plugin 'ayu-theme/ayu-vim'
+
+Plugin 'morhetz/gruvbox'
+
+Plugin 'scrooloose/syntastic'
+
+Plugin 'Lokaltog/powerline'
+
+Plugin 'mxw/vim-jsx'
+
+Plugin 'maxmellon/vim-jsx-pretty'
+
 call vundle#end()
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""Vim Installer Plugs with Vundle end""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
+
+
+"""""""""""" Start Powerline Settings """"""""""""""""
+
+set guifont=Inconsolata\ for\ Powerline:h15
+let g:Powerline_symbols = 'fancy'
+set encoding=utf-8
+set t_Co=256
+set fillchars+=stl:\ ,stlnc:\
+set term=xterm-256color
+set termencoding=utf-8
+
+if has("gui_running")
+    let s:uname = system("uname")
+    if s:uname == "Darwin\n"
+        set guifont=Source\ Code\ Pro\ for\ Powerline:h15
+        colorscheme PaperColor              " set color scheme
+    endif
+endif
+
+
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -31,40 +86,15 @@ call vundle#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
 
-Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
-let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-tsserver', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier', 'coc-rls']
-
-Plug 'leafgarland/typescript-vim'
-
-Plug 'https://github.com/vim-syntastic/syntastic'
-
-Plug 'https://github.com/Shougo/vimproc.vim', {'do' : 'make'}
-
-Plug 'https://github.com/Quramy/tsuquyomi'
-
-Plug 'scrooloose/nerdtree'
-
-Plug 'jistr/vim-nerdtree-tabs'
-
-Plug 'morhetz/gruvbox'
-
-Plug 'ayu-theme/ayu-vim'
-
-Plug 'kien/rainbow_parentheses.vim'
-
 call plug#end()
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""Vim Installer Plugs with Plug end""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """Vim Identguide configs"""""""""""""""""""""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:indent_guides_enable_on_vim_startup = 1
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""Vim Indentguid configs end"""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -79,9 +109,6 @@ map <C-n> :NERDTreeToggle<CR>
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""Vim NERDTree configs end"""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -95,9 +122,7 @@ let g:typescript_compiler_binary = 'tsc'
 let g:typescript_compiler_options = ''
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""Vim Typescript configs end"""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -179,9 +204,8 @@ nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
 nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""Vim COC Configs end""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """Vim Airline Configs!!""""""""""""""""""""""""""""""""""""
@@ -192,27 +216,8 @@ let g:airline_theme='minimalist'
 let g:airline#extensions#tabline#enabled=1
 let g:airline#extensions#tabline#formatter='unique_tail'
 let g:airline_powerline_fonts=1
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""Vim Airline Configs End""""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""Vim Theme Gruvbox Configs""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"if (has("termguicolors"))
-"  set termguicolors
-"endif
-"colorscheme gruvbox
-"let g:gruvbox_italic=1
-"let g:gruvbox_termcolors=256
-"let g:gruvbox_contrast_dark='hard'
-"let g:gruvbox_contrast_light='hard'
-"let g:gruvbox_italicize_strings=1
-"set bg=light
-"set bg=dark
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""Vim Theme Gruvbox Configs End""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """Vim Theme Ayu Configs""""""""""""""""""""""""""""""""""""
@@ -222,9 +227,8 @@ set termguicolors     " enable true colors support
 "let ayucolor="mirage" " for mirage version of theme
 let ayucolor="dark"   " for dark version of theme
 colorscheme ayu
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""Vim Theme Ayu Configs End""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """Rainbow Configs""""""""""""""""""""""""""""""""""""""""""
@@ -254,9 +258,8 @@ au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""Rainbow Configs End""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """Buffers Nav""""""""""""""""""""""""""""""""""""""""""""""
@@ -293,9 +296,8 @@ nmap <leader>[7  :<C-u>b7<cr>
 nmap <leader>[8  :<C-u>b8<cr>
 nmap <leader>[9  :<C-u>b9<cr>
 nmap <leader>[0  :<C-u>b10<cr>
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""Buffers Nav End""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """Vim sets"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -316,12 +318,7 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 set clipboard=unnamed
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""Vim sets end""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-
-filetype plugin indent on
 
 au BufNewFile,BufRead *.ts setlocal filetype=typescript
 
